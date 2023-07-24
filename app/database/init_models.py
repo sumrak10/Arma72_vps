@@ -1,4 +1,4 @@
 def init_models() -> None:
     # import models here
-    # pass
-    # from chats.models import Message, Chat
+    from bot.users.models import TelegramUser, TelegramUserRole
+    from bot.CRM.models import Order, ProductInOrder

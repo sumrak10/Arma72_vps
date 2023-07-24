@@ -1,6 +1,6 @@
 from bot.bot import TOKEN
 
-MAIN_GROUP_ID = -1001640394603
-WEBHOOK_HOST = "https://fbdd-178-47-167-91.ngrok-free.app"
+
+WEBHOOK_HOST = "https://465f-178-47-167-91.ngrok-free.app"
 WEBHOOK_PATH = f"/bot/{TOKEN}"
 WEBHOOK_URL =  f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
