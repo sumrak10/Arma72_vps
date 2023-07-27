@@ -1,4 +1,4 @@
-from typing import AsyncGenerator, Any
+from typing import AsyncGenerator, Any, Dict
 
 from sqlalchemy.types import JSON
 from sqlalchemy.ext.asyncio import create_async_engine
@@ -19,10 +19,10 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
         yield session
 
 class Base(AsyncAttrs, DeclarativeBase):
-    pass
-    # type_annotation_map = {
-    #     dict[str, Any]: JSON
-    # }
+    # pass
+    type_annotation_map = {
+        Dict[str, Any]: JSON
+    }
 
 
 
