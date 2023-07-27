@@ -1,8 +1,8 @@
-"""init
+"""annotated test
 
-Revision ID: 4a66df1a086c
-Revises: a8b50dbd912e
-Create Date: 2023-07-24 18:23:55.480989
+Revision ID: 5cbf084c7a97
+Revises: a506c15ce7d1
+Create Date: 2023-07-25 12:40:45.477249
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '4a66df1a086c'
-down_revision = 'a8b50dbd912e'
+revision = '5cbf084c7a97'
+down_revision = 'a506c15ce7d1'
 branch_labels = None
 depends_on = None
 

@@ -1,11 +1,6 @@
-from pydantic import BaseModel
+from typing import List
 
-class OrderSchema(BaseModel):
-    id:int
-    client_name: str
-    contacts: str
-    summ: int
-    created_at: str
+from pydantic import BaseModel
 
 class ProductInOrderSchema(BaseModel):
     order_id: int
@@ -16,10 +11,18 @@ class ProductInOrderSchema(BaseModel):
     summ_type: str
     option_id: int
     option_value: str
+class OrderSchema(BaseModel):
+    id:int
+    client_name: str
+    contacts: str
+    summ: int
+    created_at: str
+    products: List[ProductInOrderSchema]
 
 
 
-class AppealSchema(BaseModel):
+
+class ConsultationSchema(BaseModel):
     name: str
     contacts: str
     text: str

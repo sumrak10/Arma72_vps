@@ -6,8 +6,8 @@ from ..users.models import TelegramUser
 
 
 async def buildMainMenuKeyBoard(user: TelegramUser):
-    rights = await user.get_role_rights()
-    print(rights)
+    # rights = await user.role.__dict__
+    # print(rights)
     mainMenuKeyboard = InlineKeyboardMarkup(row_width=10)
     mainMenuKeyboard.add(InlineKeyboardButton('Узнать статус заказа ✅', callback_data='mainMenu_send'))
 

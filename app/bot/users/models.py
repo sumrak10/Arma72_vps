@@ -1,29 +1,35 @@
-from database.accessor import gino as db
+from typing import List, Any
 
 
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import relationship
 
-class TelegramUser(db.Model):
+from database.accessor import Base
+
+
+class TelegramUser(Base):
     __tablename__ = "telegram_users"
     
-    id = db.Column(db.Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
-    first_name = db.Column(db.String(256))
-    last_name = db.Column(db.String(256))
-    role = db.Column(db.Integer, db.ForeignKey("telegram_user_roles.id"))
+    first_name: Mapped[str]
+    last_name: Mapped[str]
+    role_id: Mapped[int] = mapped_column(ForeignKey("telegram_user_roles.id"))
+    role: Mapped["TelegramUserRole"] = relationship(back_populates="users")
 
-    async def get_role_rights(self) -> dict:
-        role = await TelegramUserRole.query.where(TelegramUserRole.id==self.role).gino.first()
-        print(role.__dict__['__values__'])
-        return role
 
-class TelegramUserRole(db.Model):
+
+
+
+class TelegramUserRole(Base):
     __tablename__ = "telegram_user_roles"
     
-    id = db.Column(db.Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
-    name = db.Column(db.String(128), nullable=False)
-    verbose_name = db.Column(db.String(128), nullable=False)
-    superuser = db.Column(db.Boolean, nullable=False)
-    client = db.Column(db.Boolean, nullable=False)
-    hr = db.Column(db.Boolean, nullable=False)
-    sales_manager = db.Column(db.Boolean, nullable=False)
+    name: Mapped[str]
+    verbose_name: Mapped[str | None]
+    permissions: Mapped[dict[str, Any]]
+
+    users: Mapped[List["TelegramUser"]] = relationship(back_populates="role")

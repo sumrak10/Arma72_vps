@@ -1,46 +1,62 @@
-from database.accessor import gino as db
+import datetime
+
+from sqlalchemy import ForeignKey, DateTime
+from sqlalchemy.sql import func
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import relationship
+
+from database.accessor import Base
+
+from ..users.models import *
 
 
 
-
-
-class Order(db.Model):
+class Order(Base):
     __tablename__ = "orders"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
-    telegram_user = db.Column(db.Integer, db.ForeignKey("telegram_users.id"))
-    client_name = db.Column(db.String(256), nullable=False)
-    contacts = db.Column(db.String(512), nullable=False)
-    summ = db.Column(db.Integer, nullable=False)
-    created_at = db.Column(db.String(64), nullable=False)
-    status = db.Column(db.Integer, db.ForeignKey("order_statuses.id"))
+    telegram_user_id: Mapped[int] = mapped_column(ForeignKey("telegram_users.id"))
+    # telegram_user: Mapped["TelegramUser"] = relationship("TelegramUser")
 
-    sales_manager = db.Column(db.Integer, db.ForeignKey("telegram_users.id"))
+    status_id: Mapped[int] = mapped_column(ForeignKey("order_statuses.id"))
+    # status: Mapped["OrderStatus"] = relationship()
+
+    sales_manager_id: Mapped[int] = mapped_column(ForeignKey("telegram_users.id"))
+    # sales_manager: Mapped["TelegramUser"] = relationship()
+
+    # product: Mapped[List["ProductInOrder"]] = relationship()
+
+    client_name: Mapped[str]
+    contacts: Mapped[str]
+    summ: Mapped[int]
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
-class ProductInOrder(db.Model):
+
+class ProductInOrder(Base):
     __tablename__ = "products_in_orders"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
-    order = db.Column(db.Integer, db.ForeignKey("orders.id"))
+    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id"))
 
-    product_id = db.Column(db.Integer, nullable=False)
-    product_name = db.Column(db.String(512), nullable=False)
-    product_img = db.Column(db.String(1024), nullable=False)
-    count = db.Column(db.Integer, nullable=False)
-    summ = db.Column(db.Integer, nullable=False)
-    summ_type = db.Column(db.String(64), nullable=False)
-    option_id = db.Column(db.Integer, nullable=False)
-    option_value = db.Column(db.String(5256), nullable=False)
+    product_id: Mapped[int]
+    product_name: Mapped[str]
+    product_img: Mapped[str]
+    count: Mapped[int]
+    summ: Mapped[int]
+    summ_type: Mapped[str]
+    option_id: Mapped[int]
+    option_value: Mapped[str]
 
-class OrderStatus(db.Model):
+class OrderStatus(Base):
     __tablename__ = "order_statuses"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
-    verbose_name = db.Column(db.String(128), nullable=False)
+    verbose_name: Mapped[str]
 
 
 

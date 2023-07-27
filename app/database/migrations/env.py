@@ -7,11 +7,13 @@ from alembic import context
 
 from config import DB, DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS
 
-from database.accessor import gino
+from database.accessor import Base
 
 from database.init_models import init_models
 
 
+from bot.users.models import *
+from bot.CRM.models import *
 
 config = context.config
 
@@ -28,7 +30,7 @@ if config.config_file_name is not None:
 
 
 
-target_metadata = gino
+target_metadata = Base.metadata
 
 
 
@@ -45,7 +47,7 @@ def run_migrations_offline() -> None:
 
 
 def run_migrations_online() -> None:
-    init_models()
+    # init_models()
     connectable = engine_from_config(
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",

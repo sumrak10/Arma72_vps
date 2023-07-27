@@ -5,8 +5,8 @@ app = FastAPI()
 
 
 
-from database.events import router as database_events_router
-app.include_router(database_events_router)
+# from database.events import router as database_events_router
+# app.include_router(database_events_router)
 
 
 
