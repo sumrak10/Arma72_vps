@@ -19,9 +19,10 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
         yield session
 
 class Base(AsyncAttrs, DeclarativeBase):
-    type_annotation_map = {
-        dict[str, Any]: JSON
-    }
+    pass
+    # type_annotation_map = {
+    #     dict[str, Any]: JSON
+    # }
 
 
 
