@@ -1,4 +1,4 @@
-from typing import List, Any
+from typing import List, Any, Optional
 
 
 from sqlalchemy import ForeignKey
@@ -29,7 +29,7 @@ class TelegramUserRole(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     name: Mapped[str]
-    verbose_name: Mapped[str | None]
+    verbose_name: Mapped[Optional[str]]
     permissions: Mapped[dict[str, Any]]
 
     users: Mapped[List["TelegramUser"]] = relationship(back_populates="role")
