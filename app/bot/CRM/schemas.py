@@ -35,7 +35,7 @@ class ProductInOrderSchema(BaseModel):
 class OrderSchema(BaseModel):
     id:int
     contacts: str
-    summ: int
+    summ: str
     created_at: str
     products: List[ProductInOrderSchema]
 
