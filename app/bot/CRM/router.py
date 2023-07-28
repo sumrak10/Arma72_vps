@@ -27,13 +27,13 @@ async def index():
     return JSONResponse({"message": "sended"})
 
 @router.post("/order")
-async def new_order_notification(id: int):
-    await bot.send_message(SALES_MANAGERS_GROUP_ID, f"Новая заявка!\n<a href='https://arma72.com/admin/CRM/order/{id}/change/'>Ссылка</a>", parse_mode="HTML")
+async def new_order_notification(order: OrderSchema):
+    await bot.send_message(SALES_MANAGERS_GROUP_ID, f"Новая заявка!\n<a href='https://arma72.com/admin/CRM/order/{order.id}/change/'>Ссылка</a>", parse_mode="HTML")
     return JSONResponse({"message": "order_created"})
 
 
 @router.post("/consultation")
-async def new_order_notification(consultation: ConsultationSchema):
+async def new_consultation_notification(consultation: ConsultationSchema):
     text = "Запрос на консультацию:\n"
     if consultation.name:
         text += f"Имя клиента: {consultation.name}\n"
@@ -41,4 +41,4 @@ async def new_order_notification(consultation: ConsultationSchema):
     if consultation.text:
         text += f"Сопровождающий текст: {consultation.text}\n"
     await bot.send_message(SALES_MANAGERS_GROUP_ID, text)
-    return JSONResponse({"message": "appeal created"})
+    return JSONResponse({"message": "consultation created"})
