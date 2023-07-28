@@ -14,7 +14,6 @@ from pydantic import BaseModel
 #     "articul": product.product.articul
 # }
 class ProductInOrderSchema(BaseModel):
-    order_id: int | None
     id: int
     name: str
     count: int
