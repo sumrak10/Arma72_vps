@@ -18,11 +18,12 @@ class ProductInOrderSchema(BaseModel):
     id: int
     name: str
     count: int
-    summ: int
+    options: str | None
+    summ: str
     wholesale_price: int
     retail_price: int
-    discount: str
-    articul: str
+    discount: int
+    articul: str | None
 
 # {
 #     "id": order.id,
