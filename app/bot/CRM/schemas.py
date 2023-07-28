@@ -2,18 +2,37 @@ from typing import List
 
 from pydantic import BaseModel
 
+# {
+#     "id": product.product.id,
+#     "name": product.product.name,
+#     "count": product.count,
+#     "options": product.options,
+#     "summ": product.summ,
+#     "wholesale_price": product.product.wholesale_price,
+#     "retail_price": product.product.retail_price,
+#     "discount": product.product.discount,
+#     "articul": product.product.articul
+# }
 class ProductInOrderSchema(BaseModel):
-    order_id: int
-    product_id: int
-    product_name: str
+    order_id: int | None
+    id: int
+    name: str
     count: int
     summ: int
-    summ_type: str
-    option_id: int
-    option_value: str
+    wholesale_price: int
+    retail_price: int
+    discount: str
+    articul: str
+
+# {
+#     "id": order.id,
+#     "contacts": order.contacts,
+#     "summ": order.summ,
+#     "created_at": order.created_at.strftime("%m/%d/%Y, %H:%M:%S"),
+#     "products": products_in_order
+# }
 class OrderSchema(BaseModel):
     id:int
-    client_name: str
     contacts: str
     summ: int
     created_at: str
