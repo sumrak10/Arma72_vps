@@ -18,6 +18,7 @@ async def bot_webhook(update: dict):
     telegram_update = types.Update(**update)
     Dispatcher.set_current(dp)
     Bot.set_current(bot)
+    logging.info("telegram send updates!")
     await dp.process_update(telegram_update)
 
 
