@@ -9,7 +9,7 @@ from .users.models import TelegramUser
 from .CRM.keyboards import buildMainMenuKeyBoard
 from .CRM.models import Order
 
-from config import TOKEN
+from bot.config import TOKEN
 
 
 
