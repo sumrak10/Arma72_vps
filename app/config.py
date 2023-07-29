@@ -3,9 +3,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-TOKEN = os.getenv("TOKEN")
 
-DEBUG = os.getenv("DEBUG")
+
+DEBUG = bool(os.getenv("DEBUG"))
 
 DB=os.environ.get("DB")
 DB_HOST=os.environ.get("DB_HOST")
