@@ -18,6 +18,7 @@ async def bot_webhook(update: dict):
     telegram_update = types.Update(**update)
     Dispatcher.set_current(dp)
     Bot.set_current(bot)
+    logging.info("telegram send updates!!!!!!!!!!")
     await dp.process_update(telegram_update)
 
 
@@ -28,7 +29,6 @@ async def on_startup():
     webhook_info = await bot.get_webhook_info()
     logging.info("webhook urls:")
     logging.info(WEBHOOK_URL)
-    logging.info(webhook_info.url)
     if webhook_info.url != WEBHOOK_URL:
         await bot.set_webhook(
             url=WEBHOOK_URL
