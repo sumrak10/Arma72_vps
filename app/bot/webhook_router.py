@@ -25,7 +25,7 @@ async def bot_webhook(update: dict):
 
 
 async def on_startup_bot(dp):
-    await bot.set_webhook(WEBHOOK_URL)
+    await bot.set_webhook("https://194.67.65.190/bot")
 async def on_shutdown_bot(dp):
     logging.warning('Shutting down..')
     await bot.delete_webhook()
@@ -43,7 +43,7 @@ async def on_startup():
     logging.info("Bot on startup event")
     await start_webhook(
         dispatcher=dp,
-        webhook_path=WEBHOOK_PATH,
+        webhook_path='/bot',
         on_startup=on_startup_bot,
         on_shutdown=on_shutdown_bot,
         skip_updates=True,
