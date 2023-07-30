@@ -10,7 +10,6 @@ async def get_current_user(msg: types.Message) -> TelegramUser:
     async with async_session_maker() as session:
         user = await session.get(TelegramUser, msg.from_user.id)
     if user is None:
-        print("reg")
         user = await register_user(msg)
     return user
 
