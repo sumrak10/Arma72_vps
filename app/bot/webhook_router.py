@@ -29,6 +29,7 @@ async def on_startup():
     webhook_info = await bot.get_webhook_info()
     logging.info("webhook urls:")
     logging.info(WEBHOOK_URL)
+    logging.info(WEBHOOK_PATH)
     if webhook_info.url != WEBHOOK_URL:
         await bot.set_webhook(
             url=WEBHOOK_URL
