@@ -41,7 +41,7 @@ async def on_shutdown_bot(dp):
 @router.on_event("startup")
 async def on_startup():
     logging.info("Bot on startup event")
-    start_webhook(
+    await start_webhook(
         dispatcher=dp,
         webhook_path=WEBHOOK_PATH,
         on_startup=on_startup_bot,
