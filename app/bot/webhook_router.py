@@ -2,8 +2,7 @@ import logging
 
 from fastapi import APIRouter
 
-from aiogram import types, Dispatcher, Bot
-from aiogram.utils.executor import start_webhook
+from aiogram import types, Dispatcher, Bot, executor
 
 from .bot import bot, dp
 from .config import WEBHOOK_URL, WEBHOOK_PATH
@@ -23,33 +22,10 @@ async def bot_webhook(update: dict):
     await dp.process_update(telegram_update)
 
 
-
-async def on_startup_bot(dp):
-    await bot.set_webhook("https://194.67.65.190/bot")
-async def on_shutdown_bot(dp):
-    logging.warning('Shutting down..')
-    await bot.delete_webhook()
-    await dp.storage.close()
-    await dp.storage.wait_closed()
-    logging.warning('Bye!')
-
-
-# if __name__ == '__main__':
-    
-
-
 @router.on_event("startup")
 async def on_startup():
     logging.info("Bot on startup event")
-    start_webhook(
-        dispatcher=dp,
-        webhook_path='/bot',
-        on_startup=on_startup_bot,
-        on_shutdown=on_shutdown_bot,
-        skip_updates=True,
-        host="0.0.0.0",
-        port=443,
-    )
+    executor.start_polling(dp, skip_updates=True)
     # webhook_info = await bot.get_webhook_info()
     # logging.info("webhook urls:")
     # logging.info(WEBHOOK_URL)
@@ -59,10 +35,11 @@ async def on_startup():
     #         url=WEBHOOK_URL
     #     )
 
-# @router.on_event("shutdown")
-# async def on_shutdown():
-#     logging.info('Bot shutdown event')
+
+@router.on_event("shutdown")
+async def on_shutdown():
+    logging.info('Bot shutdown event')
     
-#     await bot.delete_webhook()
-#     session = await bot.get_session()
-#     await session.close()
+    await bot.delete_webhook()
+    session = await bot.get_session()
+    await session.close()
