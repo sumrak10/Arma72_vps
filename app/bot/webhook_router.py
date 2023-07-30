@@ -3,38 +3,14 @@ import logging
 from fastapi import APIRouter
 
 from aiogram import types, Dispatcher, Bot
-from aiogram.utils.executor import start_webhook
 
-from .bot import bot, dp
-from .config import WEBHOOK_URL, WEBHOOK_PATH
+from bot.bot import bot, dp
+from bot.config import WEBHOOK_URL, WEBHOOK_PATH
 
 
 
 router = APIRouter()
 
-
-
-
-
-# async def on_startup_bot(dp):
-#     await bot.set_webhook("https://194.67.65.190/bot")
-# async def on_shutdown_bot(dp):
-#     logging.warning('Shutting down..')
-#     await bot.delete_webhook()
-#     await dp.storage.close()
-#     await dp.storage.wait_closed()
-#     logging.warning('Bye!')
-
-# if __name__ == "__main__":
-#     start_webhook(
-#         dispatcher=dp,
-#         webhook_path="/bot",
-#         on_startup=on_startup_bot,
-#         on_shutdown=on_shutdown_bot,
-#         skip_updates=True,
-#         host="0.0.0.0",
-#         port=443,
-#     )
 
 
 @router.post(WEBHOOK_PATH)
