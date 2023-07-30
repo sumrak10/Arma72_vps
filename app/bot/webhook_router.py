@@ -27,6 +27,7 @@ async def on_startup():
     webhook_info = await bot.get_webhook_info()
     logging.info(webhook_info.has_custom_certificate)
     logging.info(webhook_info.ip_address)
+    logging.info(webhook_info.url)
     logging.info("webhook urls:")
     logging.info(WEBHOOK_URL)
     logging.info(WEBHOOK_PATH)
