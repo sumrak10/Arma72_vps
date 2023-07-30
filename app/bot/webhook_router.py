@@ -31,7 +31,7 @@ async def on_startup():
     logging.info("webhook urls:")
     logging.info(WEBHOOK_URL)
     logging.info(WEBHOOK_PATH)
-    f = open('text.txt', 'rb')
+    f = open('rootCA.pem', 'rb')
     cert = f.read()
     f.close()
     if webhook_info.url != WEBHOOK_URL:
