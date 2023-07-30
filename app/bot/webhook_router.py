@@ -31,10 +31,14 @@ async def on_startup():
     logging.info("webhook urls:")
     logging.info(WEBHOOK_URL)
     logging.info(WEBHOOK_PATH)
+    f = open('text.txt', 'rb')
+    cert = f.read()
+    f.close()
     if webhook_info.url != WEBHOOK_URL:
         logging.info("Bot webhook url setted")
         await bot.set_webhook(
-            url=WEBHOOK_URL
+            url=WEBHOOK_URL,
+            certificate=cert
         )
 
 @router.on_event("shutdown")
