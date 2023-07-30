@@ -29,7 +29,7 @@ async def start_handler(msg: types.Message):
     #     await start_args_director(msg, user)
     logging.info("start command from user")
     # await msg.reply(f"Здравствуйте, {user.first_name} {user.last_name}!\nЧем могу помочь?", reply_markup=await buildMainMenuKeyBoard(user))
-    await msg.reply(f"Здравствуйте")
+    await msg.reply(f"Здравствуйте!")
 
 @dp.message_handler(commands=['menu'])
 async def start_handler(msg: types.Message):
