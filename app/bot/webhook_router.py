@@ -32,6 +32,7 @@ async def on_startup():
     logging.info(WEBHOOK_URL)
     logging.info(WEBHOOK_PATH)
     if webhook_info.url != WEBHOOK_URL:
+        logging.info("Bot webhook url setted")
         await bot.set_webhook(
             url=WEBHOOK_URL
         )
