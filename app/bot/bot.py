@@ -39,10 +39,6 @@ async def start_handler(msg: types.Message):
 async def start_handler(msg: types.Message):
     await msg.reply("/menu - Главное меню\n/help - Выводит данное сообщение")
 
-# @dp.message_handler()
-# async def echo_message(msg: types.Message):
-#     await bot.send_message(msg.from_user.id, msg.text)
-
 
 async def start_args_director(msg: types.Message, user: TelegramUser) -> None:
     separator: str = '_'
