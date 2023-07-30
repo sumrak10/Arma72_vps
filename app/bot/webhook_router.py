@@ -4,8 +4,8 @@ from fastapi import APIRouter
 
 from aiogram import types, Dispatcher, Bot
 
-from bot.bot import bot, dp
-from bot.config import WEBHOOK_URL, WEBHOOK_PATH
+from .bot import bot, dp
+from .config import WEBHOOK_URL, WEBHOOK_PATH
 
 
 

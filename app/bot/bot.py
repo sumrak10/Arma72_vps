@@ -4,12 +4,12 @@ from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 
-from bot.users.auth import get_current_user
-from bot.users.models import TelegramUser
-from bot.CRM.keyboards import buildMainMenuKeyBoard
-from bot.CRM.models import Order
+from .users.auth import get_current_user
+from .users.models import TelegramUser
+from .CRM.keyboards import buildMainMenuKeyBoard
+from .CRM.models import Order
 
-from bot.config import TOKEN
+from .config import TOKEN
 
 
 
