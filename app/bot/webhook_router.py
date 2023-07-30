@@ -40,6 +40,6 @@ async def on_startup():
 async def on_shutdown():
     logging.info('Bot shutdown event')
     
-    await bot.delete_webhook()
-    session = await bot.get_session()
-    await session.close()
+    # await bot.delete_webhook()
+    # session = await bot.get_session()
+    # await session.close()
