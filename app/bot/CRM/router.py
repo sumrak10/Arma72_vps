@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 
 
 from bot.bot import bot
-from .config import SALES_MANAGERS_GROUP_ID
+from .settings import SALES_MANAGERS_GROUP_ID
 
 from .schemas import OrderSchema, ProductInOrderSchema, ConsultationSchema
 
