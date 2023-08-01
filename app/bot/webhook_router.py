@@ -25,12 +25,6 @@ async def bot_webhook(update: dict):
 async def on_startup():
     logging.info("Bot on startup event")
     webhook_info = await bot.get_webhook_info()
-    logging.info(webhook_info.has_custom_certificate)
-    logging.info(webhook_info.ip_address)
-    logging.info(webhook_info.url)
-    logging.info("webhook urls:")
-    logging.info(WEBHOOK_URL)
-    logging.info(WEBHOOK_PATH)
     f = open('rootCA.pem', 'rb')
     cert = f.read()
     f.close()
