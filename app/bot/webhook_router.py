@@ -18,7 +18,6 @@ async def bot_webhook(update: dict):
     telegram_update = types.Update(**update)
     Dispatcher.set_current(dp)
     Bot.set_current(bot)
-    logging.info("telegram send updates!!!!!!!!!!")
     await dp.process_update(telegram_update)
 
 @router.on_event("startup")
@@ -29,7 +28,7 @@ async def on_startup():
     cert = f.read()
     f.close()
     if webhook_info.url != WEBHOOK_URL:
-        logging.info("Bot webhook url setted")
+        logging.info("Bot webhook setted")
         await bot.set_webhook(
             url=WEBHOOK_URL,
             certificate=cert
