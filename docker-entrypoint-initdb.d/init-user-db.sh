@@ -5,5 +5,5 @@ set -e
 #	GRANT ALL PRIVILEGES ON DATABASE arma_bot_db TO arma_bot_user;
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
-	CREATE DATABASE arma_bot_db;
+	CREATE DATABASE "$ARMA_BOT_DB_NAME";
 EOSQL
