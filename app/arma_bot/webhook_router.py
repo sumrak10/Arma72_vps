@@ -15,6 +15,7 @@ router = APIRouter()
 
 @router.post(SETTINGS.WEBHOOK_PATH)
 async def bot_webhook(update: dict):
+    logging.warn("updates getted")
     telegram_update = types.Update(**update)
     Dispatcher.set_current(dp)
     Bot.set_current(bot)

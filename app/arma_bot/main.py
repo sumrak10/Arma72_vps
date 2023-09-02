@@ -1,7 +1,13 @@
-from fastapi import FastAPI
+from fastapi import APIRouter
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 
-arma_bot_app = FastAPI()
+from arma_bot.settings import SETTINGS
+
+
+
+router = APIRouter(
+    prefix=SETTINGS.BOT_PREFIX
+)
 
 # bot_app.add_middleware(
 #     TrustedHostMiddleware, allowed_hosts=["localhost"] 
@@ -13,10 +19,10 @@ arma_bot_app = FastAPI()
 
 
 from .webhook_router import router as webhook_router
-arma_bot_app.include_router(webhook_router)
+router.include_router(webhook_router)
 
 from .CRM.router import router as crm_router
-arma_bot_app.include_router(crm_router)
+router.include_router(crm_router)
 
 from .chat_widget.router import router as chat_widget_router
-arma_bot_app.include_router(chat_widget_router)
+router.include_router(chat_widget_router)
