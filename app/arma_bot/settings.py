@@ -6,7 +6,7 @@ from settings import SETTINGS as APP_SETTINGS
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(case_sensitive=True)
+    model_config = SettingsConfigDict(case_sensitive=True, env_file=".env")
 
     APP_PREFIX: str = "/arma_bot"
     TOKEN: str
