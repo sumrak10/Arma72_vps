@@ -13,7 +13,7 @@ class Settings(BaseSettings):
 
     APP_PREFIX: str = "/bot"
     TOKEN: str = os.getenv("TOKEN")
-    WEBHOOK_PATH: str = f"{APP_PREFIX}/{TOKEN}"
-    WEBHOOK_URL: str =  f"{APP_SETTINGS.HOST}:{APP_SETTINGS.PORT}{WEBHOOK_PATH}"
+    WEBHOOK_PATH: str = f"/{TOKEN}"
+    WEBHOOK_URL: str =  f"{APP_SETTINGS.HOST}:{APP_SETTINGS.PORT}{APP_PREFIX}{WEBHOOK_PATH}"
 
 SETTINGS = Settings()
