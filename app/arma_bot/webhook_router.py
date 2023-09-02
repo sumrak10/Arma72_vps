@@ -22,13 +22,13 @@ async def bot_webhook(update: dict):
 
 @router.on_event("startup")
 async def on_startup():
-    logging.info("Bot on startup event")
+    logging.warn("Bot on startup event")
     webhook_info = await bot.get_webhook_info()
     f = open('rootCA.pem', 'rb')
     cert = f.read()
     f.close()
     if webhook_info.url != SETTINGS.WEBHOOK_URL:
-        logging.info("Bot webhook setted")
+        logging.warn("Bot webhook setted")
         await bot.set_webhook(
             url=SETTINGS.WEBHOOK_URL,
             certificate=cert

@@ -24,6 +24,7 @@ dp.middleware.setup(LoggingMiddleware())
 
 @dp.message_handler(commands=['start'])
 async def start_handler(msg: types.Message):
+    logging.warn("start command handler triggered")
     # user = await get_current_user(msg)
     # if msg.get_args():
     #     await start_args_director(msg, user)
