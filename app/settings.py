@@ -11,6 +11,3 @@ class Settings(BaseSettings):
     PORT: int
 
 SETTINGS = Settings()
-
-import logging
-logging.warning(SETTINGS.model_dump())

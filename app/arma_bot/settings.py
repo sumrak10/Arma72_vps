@@ -14,6 +14,3 @@ class Settings(BaseSettings):
     WEBHOOK_URL: str =  f"{APP_SETTINGS.HOST}:{APP_SETTINGS.PORT}{WEBHOOK_PATH}"
 
 SETTINGS = Settings()
-
-import logging
-logging.warning(SETTINGS.model_dump())
