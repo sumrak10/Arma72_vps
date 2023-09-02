@@ -3,7 +3,7 @@ from fastapi import APIRouter, WebSocket
 
 
 router = APIRouter(
-    prefix='chat_widget'
+    prefix='/chat_widget'
 )
 
 @router.websocket("/")
