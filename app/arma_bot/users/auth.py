@@ -3,7 +3,7 @@ from aiogram import types
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database.accessor import async_session_maker
+from arma_bot.database.accessor import async_session_maker
 from .models import TelegramUser, TelegramUserRole
 
 async def get_current_user(msg: types.Message) -> TelegramUser:

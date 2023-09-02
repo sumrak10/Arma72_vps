@@ -6,7 +6,7 @@ from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 
-from database.accessor import Base
+from arma_bot.database.metadata import Base
 
 
 class TelegramUser(Base):

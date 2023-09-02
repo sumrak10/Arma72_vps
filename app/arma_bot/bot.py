@@ -9,11 +9,11 @@ from .users.models import TelegramUser
 from .CRM.keyboards import buildMainMenuKeyBoard
 from .CRM.models import Order
 
-from .config import TOKEN
+from arma_bot.settings import SETTINGS
 
 
 
-bot = Bot(token=TOKEN)
+bot = Bot(token=SETTINGS.TOKEN)
 dp = Dispatcher(bot)
 
 logging.basicConfig(level=logging.INFO)
@@ -41,14 +41,14 @@ async def start_handler(msg: types.Message):
     await msg.reply("/menu - Главное меню\n/help - Выводит данное сообщение")
 
 
-async def start_args_director(msg: types.Message, user: TelegramUser) -> None:
-    separator: str = '_'
-    command: str = msg.get_args().split(separator,1)[0]
-    values: list = msg.get_args().split(separator,1)[1].split(separator)
-    if command == 'link_the_order_to_me':
-        order = await Order.query.where(Order.id==values[0]).gino.first()
-        await order.update(
-            telegram_user = user.id
-        ).apply()
-    else:
-        msg.reply("Вы перешли по не рабочей ссылке!")
+# async def start_args_director(msg: types.Message, user: TelegramUser) -> None:
+#     separator: str = '_'
+#     command: str = msg.get_args().split(separator,1)[0]
+#     values: list = msg.get_args().split(separator,1)[1].split(separator)
+#     if command == 'link_the_order_to_me':
+#         order = await Order.query.where(Order.id==values[0]).gino.first()
+#         await order.update(
+#             telegram_user = user.id
+#         ).apply()
+#     else:
+#         msg.reply("Вы перешли по не рабочей ссылке!")

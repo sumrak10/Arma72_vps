@@ -6,14 +6,16 @@ from fastapi import Depends
 from fastapi.responses import JSONResponse
 
 
-from bot.bot import bot
+from arma_bot.bot import bot
 from .settings import SALES_MANAGERS_GROUP_ID
 
 from .schemas import OrderSchema, ProductInOrderSchema, ConsultationSchema
 
 
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/crm"
+)
 
 
 

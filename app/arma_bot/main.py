@@ -16,4 +16,7 @@ from .webhook_router import router as webhook_router
 arma_bot_app.include_router(webhook_router)
 
 from .CRM.router import router as crm_router
-arma_bot_app.include_router(crm_router, prefix="/crm")
+arma_bot_app.include_router(crm_router)
+
+from .chat_widget.router import router as chat_widget_router
+arma_bot_app.include_router(chat_widget_router)

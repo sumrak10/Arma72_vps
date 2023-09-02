@@ -5,7 +5,7 @@ from fastapi import APIRouter
 from aiogram import types, Dispatcher, Bot
 
 from .bot import bot, dp
-from .config import WEBHOOK_URL, WEBHOOK_PATH
+from arma_bot.settings import SETTINGS
 
 
 
@@ -13,7 +13,7 @@ router = APIRouter()
 
 
 
-@router.post(WEBHOOK_PATH)
+@router.post(SETTINGS.WEBHOOK_PATH)
 async def bot_webhook(update: dict):
     telegram_update = types.Update(**update)
     Dispatcher.set_current(dp)
@@ -27,10 +27,10 @@ async def on_startup():
     f = open('rootCA.pem', 'rb')
     cert = f.read()
     f.close()
-    if webhook_info.url != WEBHOOK_URL:
+    if webhook_info.url != SETTINGS.WEBHOOK_URL:
         logging.info("Bot webhook setted")
         await bot.set_webhook(
-            url=WEBHOOK_URL,
+            url=SETTINGS.WEBHOOK_URL,
             certificate=cert
         )
 

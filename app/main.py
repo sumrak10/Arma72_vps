@@ -8,6 +8,6 @@ app = FastAPI()
 
 
 
-from arma_bot.config import BOT_APP_PREFIX
-from arma_bot.main import bot_app
-app.mount(BOT_APP_PREFIX, bot_app)
+from arma_bot.settings import SETTINGS
+from arma_bot.main import arma_bot_app
+app.mount(SETTINGS.APP_PREFIX, arma_bot_app)
