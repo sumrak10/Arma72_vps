@@ -1,1 +1,2 @@
-def send_message
+def send_message():
+    pass
