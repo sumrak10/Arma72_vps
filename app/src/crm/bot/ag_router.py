@@ -12,7 +12,7 @@ router = Router(name='main')
 
 @router.message(F.text == '/start')
 async def start(msg: types.Message) -> None:
-    await msg.reply("Hello")
+    await msg.reply(f"User id: {msg.from_user.id}")
 
 @router.message(F.text == '/stop')
 async def stop(msg: types.Message) -> None:
