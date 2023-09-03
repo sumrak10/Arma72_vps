@@ -20,7 +20,7 @@ class OrderSchema(BaseModel):
     id: int
     contacts: str
     summ: int
-    created_at: datetime
+    created_at: str
     products: List[ProductSchema]
 
 #     class Config:
