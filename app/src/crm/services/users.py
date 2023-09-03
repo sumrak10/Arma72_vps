@@ -1,4 +1,4 @@
-from ..schemas.users import UserSchema, UserSchemaEdit
+from ..schemas.orders import UserSchema, UserSchemaEdit
 from ..schemas.topics import TopicSchemaAdd
 from ..utils.unitofwork import IUnitOfWork, UnitOfWork
 

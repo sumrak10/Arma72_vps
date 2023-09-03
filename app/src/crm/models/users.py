@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 
 from src.database.database_metadata import Base
 
-from ..schemas.users import UserSchema
+from ..schemas.orders import UserSchema
 
 
 

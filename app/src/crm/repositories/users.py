@@ -1,6 +1,6 @@
 from ..utils.repository import SQLAlchemyRepository
 from ..models.users import Users
-from ..schemas.users import UserSchema
+from ..schemas.orders import UserSchema
 
 class UsersRepository(SQLAlchemyRepository):
     model = Users

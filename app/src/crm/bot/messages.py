@@ -1,4 +1,4 @@
-from ..schemas.users import UserSchema
+from ..schemas.orders import UserSchema
 from ..schemas.topic_of_day import TopicOfDaySchema
 
 WELCOME_NEW_USER = "Привет, я тебя не видел раньше, а тут всякие инструкции для новых юзеров и тд и тп !"

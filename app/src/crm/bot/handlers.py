@@ -9,7 +9,7 @@ from ..main import bot
 from ..schemas.topic_of_day import TopicOfDaySchema
 from ..services.topic_of_day import TopicOfDayService
 from ..services.users import UsersService
-from ..schemas.users import UserSchema
+from ..schemas.orders import UserSchema
 from ._callbacks import MailsAllCallBack, MailsMineCallBack, TopicsMineCallBack, SettingsCallBack
 from . import messages
 
