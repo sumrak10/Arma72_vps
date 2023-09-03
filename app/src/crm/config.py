@@ -7,7 +7,9 @@ class Settings(BaseSettings):
 
     TOKEN: str
     APP_PREFIX: str = "/bot"
-    WEBHOOK_URL: str =  f"{app_settings.HOST}"
 
 
 settings = Settings()
+
+WEBHOOK_URL = f"{app_settings.HOST}:{app_settings.PORT}{settings.APP_PREFIX}/{settings.TOKEN}"
+WEBHOOK_PATH = f"/{settings.TOKEN}"

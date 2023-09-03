@@ -6,7 +6,7 @@ from aiogram.dispatcher.dispatcher import Dispatcher
 from .FastAPIRequestHandler import FastAPIRequestHandler
 from .web_app.router import router as web_app_router
 from .bot.ag_router import router as handlers_router
-from .config import settings
+from .config import settings, WEBHOOK_URL, WEBHOOK_PATH
 from ._bot import bot
 
 
@@ -24,8 +24,8 @@ router.include_router(web_app_router)
 webhook_requests_handler = FastAPIRequestHandler(
     dispatcher=dp, 
     bot=bot, 
-    webhook_url=f"{settings.WEBHOOK}{settings.APP_PREFIX}/{settings.TOKEN}",
-    webhook_path=f"/{settings.TOKEN}",
+    webhook_url=WEBHOOK_URL,
+    webhook_path=WEBHOOK_PATH,
     handle_in_background=False
 )
 router.include_router(webhook_requests_handler.get_router())
