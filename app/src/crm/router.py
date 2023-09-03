@@ -12,4 +12,4 @@ router = APIRouter(
 
 @router.post('/order')
 async def notify_new_order(order: OrderSchema):
-    bot.send_message(GROUP_ID, order.model_dump_json())
+    await bot.send_message(GROUP_ID, order.model_dump_json())
