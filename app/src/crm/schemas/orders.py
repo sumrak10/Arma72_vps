@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from datetime import datetime
 
 from pydantic import BaseModel
@@ -9,17 +9,17 @@ class ProductSchema(BaseModel):
     id: int
     name: str
     count: int
-    options: str
+    options: Optional[str]
     summ: str
-    wholesale_price: int
-    retail_price: int
+    wholesale_price: Optional[int]
+    retail_price: Optional[int]
     discount: int
-    articul: str
+    articul: Optional[str]
 
 class OrderSchema(BaseModel):
     id: int
     contacts: str
-    summ: int
+    summ: str
     created_at: str
     products: List[ProductSchema]
 
