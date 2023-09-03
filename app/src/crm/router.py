@@ -26,7 +26,7 @@ async def notify_new_order(order: OrderSchema):
 @router.post("/consultation")
 async def notify_new_consultation(consultation: ConsultationSchema):
     text = "🔴 Новая завка на консультацию!\n"
-    text = f"📞 Контакты: <pre>{consultation.contacts}</pre>\n"
+    text = f"📞 Контакты: <code>{consultation.contacts}</code>\n"
     if consultation.name != "Отсутствует":
         text += f"🔰 Имя: {consultation.name}\n"
     if consultation.text != "Отсутствует":
