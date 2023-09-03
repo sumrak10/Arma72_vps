@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from ._bot import bot
 
 from .schemas.orders import OrderSchema
+from .schemas.consultations import ConsultationSchema
 
 from .config import GROUP_ID
 
@@ -21,3 +22,13 @@ async def notify_new_order(order: OrderSchema):
         text += "\n"
     text += f"👁 <a href='https://arma72.com/admin/CRM/order/{order.id}/change/'>Посмотреть в админ панели</a>"
     await bot.send_message(GROUP_ID, text, parse_mode="HTML")
+
+@router.post("/consultation")
+async def notify_new_consultation(consultation: ConsultationSchema):
+    text = "🔴 Новая завка на консультацию!"
+    text = f"📞 Контакты: {consultation.contacts}"
+    if consultation.name != "Отсутствует":
+        text += f"Имя: {consultation.name}"
+    if consultation.text != "Отсутствует":
+        text += f"Текст: {consultation.text}"
+    await bot.send_message(GROUP_ID, text)
