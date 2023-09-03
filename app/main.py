@@ -9,5 +9,5 @@ app = FastAPI()
 
 
 
-from arma_bot.main import router as bot_router
+from .arma_bot.router import router as bot_router
 app.include_router(bot_router)

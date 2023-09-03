@@ -4,10 +4,6 @@ from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 
-from .users.auth import get_current_user
-from .users.models import TelegramUser
-from .CRM.keyboards import buildMainMenuKeyBoard
-from .CRM.models import Order
 
 from arma_bot.settings import SETTINGS
 
