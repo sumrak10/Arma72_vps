@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Type
 
-from src.database import async_session_maker
+from src.database.database import async_session_maker
 
 from ..repositories.users import UsersRepository
 from ..repositories.topics import TopicsRepository
