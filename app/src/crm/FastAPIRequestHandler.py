@@ -8,6 +8,7 @@ from fastapi import APIRouter
 from fastapi.requests import Request
 from fastapi.responses import Response, JSONResponse, StreamingResponse
 from fastapi import BackgroundTasks
+from aiogram.types import FSInputFile
 from aiogram.methods import TelegramMethod
 from aiogram.methods.base import TelegramType
 from aiogram import Bot, Dispatcher
@@ -62,7 +63,8 @@ class FastAPIRequestHandler(BaseRequestHandler):
 
     async def on_startup(self):
         logging.warn("Bot startup event")
-        await self.bot.set_webhook(self.WEBHOOK_URL)
+
+        await self.bot.set_webhook(self.WEBHOOK_URL, certificate=FSInputFile('/app/rootCA.pem'))
 
     async def _handle_close(self):
         self.close()
