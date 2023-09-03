@@ -1,6 +1,6 @@
 import uvicorn
 
-from app.src.bot.config import SETTINGS
+from src.config import SETTINGS
 
 
 if __name__ == '__main__':
