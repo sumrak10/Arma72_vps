@@ -3,18 +3,6 @@
 from aiogram import types
 from aiogram import Router
 from aiogram import F
-from aiogram.types import ReplyKeyboardRemove, \
-    ReplyKeyboardMarkup, KeyboardButton, \
-    InlineKeyboardMarkup, InlineKeyboardButton
-from aiogram.types.web_app_info import WebAppInfo
-from sqlalchemy.orm.exc import NoResultFound
-
-from ..schemas.topic_of_day import TopicOfDaySchema
-from ..services.topic_of_day import TopicOfDayService
-from ..services.users import UsersService
-from ..schemas.users import UserSchema
-from . import messages
-from . import callbacks_data
 
 from .._bot import bot
 
