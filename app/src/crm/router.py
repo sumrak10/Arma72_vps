@@ -4,8 +4,7 @@ from ._bot import bot
 
 from .schemas.orders import OrderSchema
 
-from ..config import GROUP_ID
-
+from .config import GROUP_ID
 
 router = APIRouter(
     prefix='/crm'
