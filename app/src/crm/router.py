@@ -11,6 +11,9 @@ router = APIRouter(
     prefix='/crm'
 )
 
+from .chat_widget.router import router as chat_widget_router
+router.include_router(chat_widget_router)
+
 @router.post('/order')
 async def notify_new_order(order: OrderSchema):
     text = f"🔴 Новая заявка на сумму {order.summ} р.\n🕘 Создана: {order.created_at}\n"
