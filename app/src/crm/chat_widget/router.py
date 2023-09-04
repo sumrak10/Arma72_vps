@@ -1,4 +1,10 @@
+import json
+
 from fastapi import APIRouter, WebSocket
+from fastapi.websockets import WebSocketDisconnect
+
+from .services import ws_service
+
 
 
 router = APIRouter(
@@ -7,8 +13,12 @@ router = APIRouter(
 
 
 @router.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
-    while True:
-        data = await websocket.receive_text()
-        await websocket.send_text(f"Message text was: {data}")
+async def chat_widget_websocket(websocket: WebSocket):
+    status = await ws_service.connect(websocket)
+    try:
+        while status:
+            json = await websocket.receive_json(mode="text")
+            await ws_service.direct(json, websocket)
+            # await websocket.send_text(f"Message text was: {data}")
+    except WebSocketDisconnect:
+        ws_service.disconnect(websocket)
