@@ -13,4 +13,5 @@ settings = Settings()
 
 WEBHOOK_URL = f"{app_settings.HOST}:{app_settings.PORT}{settings.APP_PREFIX}/{settings.TOKEN}"
 WEBHOOK_PATH = f"/{settings.TOKEN}"
-GROUP_ID = -912505080 # sxmrxk user id
+GROUP_ID = -912505080 # test group
+# GROUP_ID = -1001640394603 # prod group

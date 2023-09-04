@@ -1,5 +1,7 @@
 from typing import List
 import logging
+import string
+import random
 
 from fastapi import WebSocket
 
@@ -55,8 +57,9 @@ class WebSocketService:
         logging.warn(msg="Getted new message")
 
         if data['command'] == 'first_message':
-            self.rooms.append(WSRoom(uid=data['uid'], ws=ws, id=0))
-            await invite_manager_in_room(data['uid'], data['text'])
+            uid = self.generate_random_string(16)
+            self.rooms.append(WSRoom(uid=uid, ws=ws, id=0))
+            await invite_manager_in_room(uid, data['text'])
 
         elif data['command'] == 'message':
             wsroom: WSRoom = self.get_WSRoom_by_websocket(ws)
@@ -87,6 +90,11 @@ class WebSocketService:
         for wsroom in self.rooms:
             if wsroom.id == id:
                 return wsroom
+            
+    def generate_random_string(self, length) -> str:
+        letters_and_digits = string.ascii_letters + string.digits
+        crypt_rand_string = ''.join(random.choice(letters_and_digits) for i in range(length))
+        return crypt_rand_string
 
 
 ws_service = WebSocketService()
