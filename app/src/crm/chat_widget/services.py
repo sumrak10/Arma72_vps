@@ -16,6 +16,7 @@ class WebSocketService:
         return True
     
     async def disconnect(self, ws: WebSocket) -> None:
+        logging.warn("WS disconnected")
         wsroom = self.get_WSRoom_by_websocket(ws)
         self.rooms.remove(wsroom)
         await send_message_to_manager(wsroom.id, "Онлайн консультация завершена клиентом.")
