@@ -1,4 +1,5 @@
 from typing import List
+import logging
 
 from fastapi import WebSocket
 
@@ -26,6 +27,7 @@ class WebSocketService:
         })
 
     async def direct(self, data:dict, ws:WebSocket) -> None:
+        logging.warn(msg="Getted new message")
         if data['command'] == 'first_message':
             self.rooms.append(WSRoom(uid=data['uid'], ws=ws, id=0))
             invite_manager_in_room(data['text'])
