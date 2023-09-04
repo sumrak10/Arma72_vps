@@ -14,10 +14,6 @@ router = Router(name='main')
 async def start(msg: types.Message) -> None:
     await msg.reply(f"User id: {msg.from_user.id}")
 
-@router.message(F.text == '/stop')
-async def stop(msg: types.Message) -> None:
-    await msg.answer("Good bye!")
-
 
 
 @router.message(F.photo)

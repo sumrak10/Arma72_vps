@@ -20,6 +20,11 @@ class WebSocketService:
         self.rooms.remove(wsroom)
         await send_message_to_manager(wsroom.id, "Онлайн консультация завершена клиентом.")
     
+    async def close_ws_by_manager(self, manager_id: int) -> None:
+        wsroom: WSRoom = self.get_WSRoom_by_manager_id(manager_id)
+        await wsroom.ws.close()
+        self.rooms.remove(wsroom)
+
     async def set_manager_to_room(self, uid: str, manager_id: int) -> None:
         wsroom: WSRoom = self.get_WSRoom_by_uid(uid)
         wsroom.id = manager_id
@@ -29,11 +34,18 @@ class WebSocketService:
 
     async def direct(self, data:dict, ws:WebSocket) -> bool:
         logging.warn(msg="Getted new message")
+
         if data['command'] == 'first_message':
             self.rooms.append(WSRoom(uid=data['uid'], ws=ws, id=0))
             await invite_manager_in_room(data['uid'], data['text'])
-    
+
+        elif data['command'] == 'message':
+            wsroom: WSRoom = self.get_WSRoom_by_websocket(ws)
+            await send_message_to_manager(wsroom.id, data['text'])
+
         return True
+
+
 
     #utils
     def get_WSRoom_by_websocket(self, websocket:WebSocket) -> WSRoom:
@@ -44,5 +56,11 @@ class WebSocketService:
         for wsroom in self.rooms:
             if wsroom.uid == uid:
                 return wsroom
+            
+    def get_WSRoom_by_manager_id(self, id:int) -> WSRoom:
+        for wsroom in self.rooms:
+            if wsroom.id == id:
+                return wsroom
+
 
 ws_service = WebSocketService()
