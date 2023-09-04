@@ -13,4 +13,4 @@ async def stop(msg: types.Message) -> None:
 
 @router.callback_query(WSCallbackData.filter())
 async def ws_webhook_callback(query: types.CallbackQuery, callback_data: WSCallbackData):
-    pass
+    await query.answer(text="Вы нажали на кнопку!")
