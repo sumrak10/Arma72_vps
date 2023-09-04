@@ -24,7 +24,7 @@ async def consultation_handler(msg: types.Message) -> None:
 @router.callback_query(WSCallbackData.filter())
 async def ws_webhook_callback(query: types.CallbackQuery, callback_data: WSCallbackData):
     status = await ws_service.set_manager_to_room(callback_data.uid, query.from_user.id)
-    if status:
+    if status == 'ok':
         await bot.send_message(query.from_user.id, text="Онлайн консультация начата")
     else:
-        await query.answer(text="В чате консультации уже есть менеджер или она уже завершена!")
+        await query.answer(text=status)
