@@ -18,17 +18,18 @@ class WebSocketService:
     async def disconnect(self, ws: WebSocket) -> None:
         logging.warn("WS disconnected")
         wsroom = self.get_WSRoom_by_websocket(ws)
-        self.rooms.remove(wsroom)
-        await send_message_to_manager(wsroom.id, "Онлайн консультация завершена клиентом.")
+        if wsroom is not None:
+            self.rooms.remove(wsroom)
+            await send_message_to_manager(wsroom.id, "Онлайн консультация завершена клиентом.")
     
     async def close_ws_by_manager(self, manager_id: int) -> bool:
         wsroom: WSRoom = self.get_WSRoom_by_manager_id(manager_id)
         if wsroom is None:
             await send_message_to_manager(manager_id, "Вы не в онлайн консультации.")
-            return None
-        await wsroom.ws.close()
-        self.rooms.remove(wsroom)
-        await send_message_to_manager(manager_id, "Онлайн консультация завершена.")
+        else:
+            await wsroom.ws.close()
+            self.rooms.remove(wsroom)
+            await send_message_to_manager(manager_id, "Онлайн консультация завершена.")
 
     async def set_manager_to_room(self, uid: str, manager_id: int) -> bool:
         wsroom: WSRoom = self.get_WSRoom_by_uid(uid)
