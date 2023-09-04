@@ -18,7 +18,7 @@ async def chat_widget_websocket(websocket: WebSocket):
     try:
         while status:
             json = await websocket.receive_json(mode="text")
-            await ws_service.direct(json, websocket)
+            status = await ws_service.direct(json, websocket)
             # await websocket.send_text(f"Message text was: {data}")
     except WebSocketDisconnect:
         ws_service.disconnect(websocket)

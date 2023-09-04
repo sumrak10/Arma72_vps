@@ -11,8 +11,9 @@ class WebSocketService:
     def __init__(self) -> None:
         self.rooms: List[WSRoom] = []
 
-    async def connect(self, ws: WebSocket) -> None:
+    async def connect(self, ws: WebSocket) -> bool:
         await ws.accept()
+        return True
     
     async def disconnect(self, ws: WebSocket) -> None:
         wsroom = self.get_WSRoom_by_websocket(ws)
@@ -26,12 +27,13 @@ class WebSocketService:
             "command":"room_created"
         })
 
-    async def direct(self, data:dict, ws:WebSocket) -> None:
+    async def direct(self, data:dict, ws:WebSocket) -> bool:
         logging.warn(msg="Getted new message")
         if data['command'] == 'first_message':
             self.rooms.append(WSRoom(uid=data['uid'], ws=ws, id=0))
             invite_manager_in_room(data['text'])
     
+        return True
 
     #utils
     async def get_WSRoom_by_websocket(self, websocket:WebSocket) -> WSRoom:
