@@ -27,7 +27,7 @@ class WebSocketService:
 
     async def direct(self, data:dict, ws:WebSocket) -> None:
         if data['command'] == 'first_message':
-            self.rooms.append(WSRoom(uid=data['uid'], ws=ws, id=None))
+            self.rooms.append(WSRoom(uid=data['uid'], ws=ws, id=0))
             invite_manager_in_room(data['text'])
     
 
