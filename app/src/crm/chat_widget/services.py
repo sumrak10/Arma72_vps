@@ -21,9 +21,10 @@ class WebSocketService:
         self.rooms.remove(wsroom)
         await send_message_to_manager(wsroom.id, "Онлайн консультация завершена клиентом.")
     
-    async def close_ws_by_manager(self, manager_id: int) -> None:
+    async def close_ws_by_manager(self, manager_id: int) -> bool:
         wsroom: WSRoom = self.get_WSRoom_by_manager_id(manager_id)
         if wsroom is None:
+            await send_message_to_manager(manager_id, "Вы не в онлайн консультации.")
             return None
         await wsroom.ws.close()
         self.rooms.remove(wsroom)
