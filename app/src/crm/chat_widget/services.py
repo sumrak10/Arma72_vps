@@ -25,11 +25,21 @@ class WebSocketService:
         await wsroom.ws.close()
         self.rooms.remove(wsroom)
 
-    async def set_manager_to_room(self, uid: str, manager_id: int) -> None:
+    async def set_manager_to_room(self, uid: str, manager_id: int) -> bool:
         wsroom: WSRoom = self.get_WSRoom_by_uid(uid)
+        if wsroom is None:
+            return False
+        if wsroom.id != 0:
+            return False
         wsroom.id = manager_id
-        wsroom.ws.send_json({
-            "command":"room_created"
+        return True
+
+    async def send_message_from_manager(self, manager_id: int, text:str, wsroom: WSRoom = None) -> None:
+        if wsroom is None:
+            wsroom: WSRoom = self.get_WSRoom_by_manager_id(manager_id)
+        await wsroom.ws.send_json({
+            "command": "message",
+            'text': text
         })
 
     async def direct(self, data:dict, ws:WebSocket) -> bool:
@@ -48,16 +58,23 @@ class WebSocketService:
 
 
     #utils
-    def get_WSRoom_by_websocket(self, websocket:WebSocket) -> WSRoom:
+    def manager_now_in_consultation(self, id: int) -> bool:
+        for wsroom in self.rooms:
+            if wsroom.id == id:
+                return True
+        return False
+
+    def get_WSRoom_by_websocket(self, websocket:WebSocket) -> WSRoom | None:
         for wsroom in self.rooms:
             if wsroom.ws == websocket:
                 return wsroom
-    def get_WSRoom_by_uid(self, uid:str) -> WSRoom:
+
+    def get_WSRoom_by_uid(self, uid:str) -> WSRoom | None:
         for wsroom in self.rooms:
             if wsroom.uid == uid:
                 return wsroom
-            
-    def get_WSRoom_by_manager_id(self, id:int) -> WSRoom:
+
+    def get_WSRoom_by_manager_id(self, id:int) -> WSRoom | None:
         for wsroom in self.rooms:
             if wsroom.id == id:
                 return wsroom

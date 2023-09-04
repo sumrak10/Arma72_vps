@@ -22,12 +22,12 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./docker-entrypoint-initdb.d/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-    depends_on:
-      - db
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+  #   depends_on:
+  #     - db
 volumes:
   postgres-data:
