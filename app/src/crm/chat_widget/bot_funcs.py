@@ -7,7 +7,8 @@ from ..config import GROUP_ID
 async def invite_manager_in_room(uid:str, message: str):
     text = "Запрос на онлайн консультацию!\n"
     text += f"Текст запроса: {message}"
-    btn = InlineKeyboardButton(text="Соединиться", url="https://t.me/arma72_bot", callback_data=WSCallbackData(uid=uid).pack())
+    #  url="https://t.me/arma72_bot"
+    btn = InlineKeyboardButton(text="Соединиться", callback_data=WSCallbackData(uid=uid).pack())
     kb = InlineKeyboardMarkup(inline_keyboard=[[btn]])
     await bot.send_message(GROUP_ID, text, reply_markup=kb)
 
