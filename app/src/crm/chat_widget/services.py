@@ -31,7 +31,7 @@ class WebSocketService:
         logging.warn(msg="Getted new message")
         if data['command'] == 'first_message':
             self.rooms.append(WSRoom(uid=data['uid'], ws=ws, id=0))
-            invite_manager_in_room(data['text'])
+            invite_manager_in_room(data['uid'], data['text'])
     
         return True
 

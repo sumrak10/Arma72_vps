@@ -4,7 +4,7 @@ from .callbacks_data import WSCallbackData
 from .._bot import bot
 from ..config import GROUP_ID
 
-async def invite_manager_in_room(message: str, uid:str):
+async def invite_manager_in_room(uid:str, message: str):
     text = "Запрос на онлайн консультацию!\n"
     text += f"Текст запроса: {message}"
     kb = InlineKeyboardMarkup()
