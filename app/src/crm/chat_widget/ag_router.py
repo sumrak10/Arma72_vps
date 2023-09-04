@@ -11,8 +11,7 @@ router = Router(name="chat_widget")
 
 @router.message(F.text == '/stop')
 async def end_consultation_handler(msg: types.Message) -> None:
-    ws_service.disconnect()
-    await msg.answer("Онлайн консультация завершена!")
+    await ws_service.close_ws_by_manager(msg.from_user.id)
 
 
 @router.message(F.text)
