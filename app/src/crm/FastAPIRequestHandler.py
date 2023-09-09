@@ -64,7 +64,7 @@ class FastAPIRequestHandler(BaseRequestHandler):
     async def on_startup(self):
         logging.warn("Bot startup event")
 
-        await self.bot.set_webhook(self.WEBHOOK_URL, certificate=FSInputFile('/app/rootCA.pem'))
+        await self.bot.set_webhook(self.WEBHOOK_URL, certificate=FSInputFile('/app/letsencrypt/live/arma72vps.ru/cert.pem'))
 
     async def _handle_close(self):
         self.close()
