@@ -11,7 +11,7 @@ services:
       - .env
     volumes:
       - ./app/alembic/versions:/app/alembic/versions/
-      - ./app/letsencrypt
+      - ./app/letsencrypt:/app/letsencrypt
   db:
     image: postgres:15
     command: postgres -c listen_addresses='*'
