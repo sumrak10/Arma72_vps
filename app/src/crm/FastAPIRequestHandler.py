@@ -62,9 +62,10 @@ class FastAPIRequestHandler(BaseRequestHandler):
         return self.router
 
     async def on_startup(self):
-        logging.warn("Bot startup event")
+        logging.info("Bot startup event")
 
         await self.bot.set_webhook(self.WEBHOOK_URL) # , certificate=FSInputFile('./letsencrypt/live/arma72vps.ru/cert.pem')
+        logging.info(f"Bot webhook setted in {self.WEBHOOK_URL}")
 
     async def _handle_close(self):
         self.close()
