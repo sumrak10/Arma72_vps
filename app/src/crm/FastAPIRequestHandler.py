@@ -140,6 +140,7 @@ class FastAPIRequestHandler(BaseRequestHandler):
         return StreamingResponse(content=iter(r), media_type="form-data")
     
     async def handle(self, request: Request, background_tasks: BackgroundTasks):
+        logging.warn("updates getted")
         bot = await self.resolve_bot(request)
         if self.handle_in_background:
             return await self._handle_request_background(bot=bot, request=request, background_tasks=background_tasks)
