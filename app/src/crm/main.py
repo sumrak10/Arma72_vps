@@ -26,14 +26,14 @@ router = APIRouter(
 )
 
 
-webhook_requests_handler = FastAPIRequestHandler(
-    dispatcher=dp, 
-    bot=bot, 
-    webhook_url=WEBHOOK_URL,
-    webhook_path=WEBHOOK_PATH,
-    handle_in_background=False
-)
-router.include_router(webhook_requests_handler.get_router())
+# webhook_requests_handler = FastAPIRequestHandler(
+#     dispatcher=dp, 
+#     bot=bot, 
+#     webhook_url=WEBHOOK_URL,
+#     webhook_path=WEBHOOK_PATH,
+#     handle_in_background=False
+# )
+# router.include_router(webhook_requests_handler.get_router())
 
 from .router import router as crm_router
 router.include_router(crm_router)
