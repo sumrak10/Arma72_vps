@@ -8,8 +8,4 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 COPY . /app
 
-RUN snap install --classic certbot
-
-EXPOSE 80 443
-
 CMD ["python", "run.py"]
