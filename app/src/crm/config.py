@@ -11,7 +11,7 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-WEBHOOK_URL = f"{app_settings.HOST}:{app_settings.PORT}{settings.APP_PREFIX}/webhook_updates"
+WEBHOOK_URL = f"{app_settings.HOST}{settings.APP_PREFIX}/webhook_updates"
 WEBHOOK_PATH = f"/webhook_updates"
 GROUP_ID = -912505080 # test group
 # GROUP_ID = -1001640394603 # prod group
