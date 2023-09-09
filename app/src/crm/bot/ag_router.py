@@ -12,7 +12,7 @@ router = Router(name='main')
 
 @router.message(F.text == '/start')
 async def start(msg: types.Message) -> None:
-    await msg.reply(f"User id: {msg.from_user.id}")
+    await msg.reply(f"✨ Бот поддержки сайта Arma72.com\nВаш id: {msg.from_user.id}")
 
 
 
