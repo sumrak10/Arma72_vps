@@ -5,6 +5,9 @@ import random
 
 from fastapi import WebSocket
 
+from . import exceptions
+from .._bot import bot
+from ..config import settings
 from .schemas import WSRoom
 from .bot_funcs import invite_manager_in_room, send_message_to_manager
 
@@ -22,30 +25,58 @@ class WebSocketService:
         wsroom = self.get_WSRoom_by_websocket(ws)
         if wsroom is not None:
             self.rooms.remove(wsroom)
-            if wsroom.id != 0:
-                await send_message_to_manager(wsroom.id, "Онлайн консультация завершена клиентом.")
+            manager_name = wsroom.name
+            emoji = "✅"
+            if manager_name is None:
+                manager_name = "Отсутствовал"
+                emoji = "💤"
+            await bot.edit_message_text(
+                text=f"{emoji} Консультация завершена клиентом\n❔ Текст запроса:{wsroom.text}\nⓂ️ Менеджер: {manager_name}",
+                chat_id=settings.GROUP_ID,
+                message_id=wsroom.message_id
+            )
+            if wsroom.id is not None:
+                await send_message_to_manager(
+                    wsroom.id, 
+                    "✅ Онлайн консультация завершена клиентом."
+                )
     
     async def close_ws_by_manager(self, manager_id: int) -> bool:
         wsroom: WSRoom = self.get_WSRoom_by_manager_id(manager_id)
         if wsroom is None:
-            await send_message_to_manager(manager_id, "Вы не в онлайн консультации.")
+            await send_message_to_manager(manager_id, "❌ Вы не в онлайн консультации.")
         else:
+            await bot.edit_message_text(
+                text=f"✅ Консультация завершена менеджером\n❔ Текст запроса:{wsroom.text}\nⓂ️ Менеджер: {wsroom.name}",
+                chat_id=settings.GROUP_ID,
+                message_id=wsroom.message_id
+            )
             await wsroom.ws.close()
             self.rooms.remove(wsroom)
-            await send_message_to_manager(manager_id, "Онлайн консультация завершена.")
+            await send_message_to_manager(manager_id, "✅ Онлайн консультация завершена Вами.")
 
-    async def set_manager_to_room(self, uid: str, manager_id: int) -> str:
+    async def set_manager_to_room(self, 
+        uid: str, 
+        manager_id: int, 
+        manager_name: str
+    ) -> WSRoom:
         wsroom: WSRoom = self.get_WSRoom_by_uid(uid)
         if self.get_WSRoom_by_manager_id(manager_id) is not None:
-            return "Вы находитесь в другой консультации. Закончите ее и попробуйте снова."
+            raise exceptions.UserNowInOtherRoom()
         if wsroom is None:
-            return "Консультация уже закончена!"
-        if wsroom.id != 0:
-            return "В консультации уже есть менеджер!"
+            raise exceptions.RoomNotFound()
+        if wsroom.id is not None:
+            raise exceptions.OtherManagerConnecteRoom()
+        await send_message_to_manager(manager_id, text="🌀 Онлайн консультация начата")
         wsroom.id = manager_id
-        return 'ok'
+        wsroom.name = manager_name
+        return wsroom
 
-    async def send_message_from_manager(self, manager_id: int, text:str, wsroom: WSRoom = None) -> None:
+    async def send_message_from_manager(self, 
+        manager_id: int, 
+        text:str, 
+        wsroom: WSRoom = None
+    ) -> None:
         if wsroom is None:
             wsroom: WSRoom = self.get_WSRoom_by_manager_id(manager_id)
         await wsroom.ws.send_json({
@@ -54,12 +85,20 @@ class WebSocketService:
         })
 
     async def direct(self, data:dict, ws:WebSocket) -> bool:
-        logging.warn(msg="Getted new message")
 
         if data['command'] == 'first_message':
             uid = self.generate_random_string(16)
-            self.rooms.append(WSRoom(uid=uid, ws=ws, id=0))
-            await invite_manager_in_room(uid, data['text'])
+            msg = await invite_manager_in_room(uid, data['text'])
+            self.rooms.append(
+                WSRoom(
+                    uid=uid, 
+                    ws=ws, 
+                    id=None, 
+                    name=None,
+                    message_id=msg.message_id,
+                    text=data['text']
+                )
+            )
 
         elif data['command'] == 'message':
             wsroom: WSRoom = self.get_WSRoom_by_websocket(ws)
@@ -93,7 +132,8 @@ class WebSocketService:
             
     def generate_random_string(self, length) -> str:
         letters_and_digits = string.ascii_letters + string.digits
-        crypt_rand_string = ''.join(random.choice(letters_and_digits) for i in range(length))
+        crypt_rand_string = ''.join(random.choice(letters_and_digits) 
+            for i in range(length))
         return crypt_rand_string
 
 

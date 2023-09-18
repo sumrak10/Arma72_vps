@@ -1,5 +1,3 @@
-####################################################################################################
-
 import logging
 import secrets
 from typing import Any, Dict, Optional
@@ -8,11 +6,9 @@ from fastapi import APIRouter
 from fastapi.requests import Request
 from fastapi.responses import Response, JSONResponse, StreamingResponse
 from fastapi import BackgroundTasks
-from aiogram.types import FSInputFile
 from aiogram.methods import TelegramMethod
 from aiogram.methods.base import TelegramType
 from aiogram import Bot, Dispatcher
-from aiogram.dispatcher.dispatcher import Dispatcher
 from aiogram.webhook.aiohttp_server import BaseRequestHandler
 
 from aiohttp import MultipartWriter
@@ -36,11 +32,15 @@ class FastAPIRequestHandler(BaseRequestHandler):
         self.bot = bot
         self.WEBHOOK_URL = webhook_url
         self.router = APIRouter()
-        self.webhook_path = webhook_path
+        self.WEBHOOK_PATH = webhook_path
 
         self.dispatcher.startup.register(self.on_startup)
         self.router.add_event_handler(event_type="shutdown", func=self._handle_close)
-        self.router.add_api_route(path=self.webhook_path, endpoint=self.handle, methods=["POST"])
+        self.router.add_api_route(
+            path=self.WEBHOOK_PATH, 
+            endpoint=self.handle, 
+            methods=["POST"]
+        )
 
         
         workflow_data = {
@@ -64,11 +64,11 @@ class FastAPIRequestHandler(BaseRequestHandler):
     async def on_startup(self):
         logging.warn("Bot startup event")
 
-        await self.bot.set_webhook(self.WEBHOOK_URL) # , certificate=FSInputFile('./letsencrypt/live/arma72vps.ru/chain.pem')
+        await self.bot.set_webhook(self.WEBHOOK_URL)
         logging.warn(f"Bot webhook setted in {self.WEBHOOK_URL}")
 
     async def _handle_close(self):
-        self.close()
+        await self.close()
     async def close(self):
         logging.info('Bot shutdown event')
         # await dp.storage.close()
@@ -82,8 +82,10 @@ class FastAPIRequestHandler(BaseRequestHandler):
         return super().verify_secret(telegram_secret_token, bot)
     
     async def _background_feed_update(self, bot: Bot, request: Request) -> None:
-        # result = await self.dispatcher.feed_raw_update(bot=bot, update=update, **self.data)
-        result: Optional[TelegramMethod[Any]] = await self.dispatcher.feed_webhook_update(
+        # result = await self.dispatcher.feed_raw_update(
+        #     bot=bot, update=update, **self.data
+        # )
+        result = await self.dispatcher.feed_webhook_update(
             bot,
             await request.json(),
             **self.data
@@ -91,7 +93,11 @@ class FastAPIRequestHandler(BaseRequestHandler):
         if isinstance(result, TelegramMethod):
             await self.dispatcher.silent_call_request(bot=bot, result=result)
     
-    async def _handle_request_background(self, bot: Bot, request: Request, background_tasks: BackgroundTasks) -> Response:
+    async def _handle_request_background(self, 
+        bot: Bot, 
+        request: Request, 
+        background_tasks: BackgroundTasks
+    ) -> Response:
         background_tasks.add_task(
             self._background_feed_update,
             bot=bot,
@@ -140,8 +146,11 @@ class FastAPIRequestHandler(BaseRequestHandler):
         return StreamingResponse(content=iter(r), media_type="form-data")
     
     async def handle(self, request: Request, background_tasks: BackgroundTasks):
-        logging.warn("updates getted")
         bot = await self.resolve_bot(request)
         if self.handle_in_background:
-            return await self._handle_request_background(bot=bot, request=request, background_tasks=background_tasks)
+            return await self._handle_request_background(
+                bot=bot, 
+                request=request, 
+                background_tasks=background_tasks
+            )
         return await self._handle_request(bot=bot, request=request)
