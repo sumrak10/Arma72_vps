@@ -14,7 +14,7 @@ router = Router(name='main')
 
 @router.message(F.text == '/start')
 async def start(msg: types.Message) -> None:
-    await bot.send_message(msg.from_user.id, f"✨ Бот поддержки сайта Arma72.com\nВаш id: {msg.from_user.id} {settings.GROUP_ID}")
+    await bot.reply(f"✨ Бот поддержки сайта Arma72.com\nВаш id: {msg.from_user.id} {settings.GROUP_ID}")
 
 
 
