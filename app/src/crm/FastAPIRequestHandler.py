@@ -63,9 +63,9 @@ class FastAPIRequestHandler(BaseRequestHandler):
 
     async def on_startup(self):
         logging.warn("Bot startup event")
-        webhook = await self.bot.get_webhook_info()
-        if webhook.url:
-            await self.bot.delete_webhook(drop_pending_updates=True)
+        # webhook = await self.bot.get_webhook_info()
+        # if webhook.url:
+        #     await self.bot.delete_webhook(drop_pending_updates=True)
         await self.bot.set_webhook(self.WEBHOOK_URL)
         logging.warn(f"Bot webhook setted in {self.WEBHOOK_URL}")
 
@@ -73,7 +73,7 @@ class FastAPIRequestHandler(BaseRequestHandler):
         await self.close()
     async def close(self):
         logging.info('Bot shutdown event')
-        await self.bot.delete_webhook(drop_pending_updates=True)
+        # await self.bot.delete_webhook(drop_pending_updates=True)
         await self.bot.session.close()
     
     async def resolve_bot(self, request: Request) -> Bot:
