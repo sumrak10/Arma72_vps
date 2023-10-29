@@ -8,8 +8,8 @@ if __name__ == '__main__':
         uvicorn.run("src.main:app", 
             host='0.0.0.0', 
             port=settings.PORT, 
-            ssl_keyfile="/etc/letsencrypt/live/arma72vps.ru/fullchain.pem", 
-            ssl_certfile="/etc/letsencrypt/live/arma72vps.ru/privkey.pem"
+            ssl_keyfile=settings.SSL_KEYFILE, 
+            ssl_certfile=settings.SSL_CERTFILE
         )
     else:
         uvicorn.run("src.main:app", 

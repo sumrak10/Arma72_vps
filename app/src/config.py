@@ -8,5 +8,7 @@ class Settings(BaseSettings):
     DEBUG: bool
     HOST: str
     PORT: int
+    SSL_KEYFILE: str
+    SSL_CERTFILE: str
 
 settings = Settings()
