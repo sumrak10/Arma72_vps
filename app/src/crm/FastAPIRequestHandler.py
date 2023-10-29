@@ -71,8 +71,7 @@ class FastAPIRequestHandler(BaseRequestHandler):
         await self.close()
     async def close(self):
         logging.info('Bot shutdown event')
-        # await dp.storage.close()
-        # await dp.storage.wait_closed()
+        await self.bot.delete_webhook(drop_pending_updates=True)
         await self.bot.session.close()
     
     async def resolve_bot(self, request: Request) -> Bot:
