@@ -12,7 +12,7 @@ services:
       - .env
     volumes:
       - ./app/alembic/versions:/app/alembic/versions/
-      - /etc/letsencrypt/live/arma72vps.ru/:/app/letsencrypt/
+      - /etc/letsencrypt/:/app/letsencrypt/
   db:
     image: postgres:15
     command: postgres -c listen_addresses='*'
